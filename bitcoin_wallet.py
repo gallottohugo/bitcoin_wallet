@@ -1,6 +1,6 @@
-from bit import PrivateKey, PrivateKeyTestnet
+from bit import PrivateKey, PrivateKeyTestnet, wif_to_key
 from bit.format import bytes_to_wif
-from bit.network import satoshi_to_currency
+from bit.network import satoshi_to_currency, currency_to_satoshi
 from wallets_crypto.models import WalletCrypto
 
 class BitcoinWallet():
@@ -88,4 +88,23 @@ class BitcoinWallet():
 			return satoshi_to_currency(satoshi, currency)
 		else:
 			return None
-	
+
+
+	@staticmethod
+	def currency_to_satoshi(self, amount, currency):
+		if currency in self.supported_currencies().keys():
+			return currency_to_satoshi(amount, currency)
+		else:
+			return None
+
+
+
+	@staticmethod
+	def convert_wif_to_privatekey(user, testnet=False):
+		if testnet == True:
+			private_key_wif = user.wallet_crypto.btc_private_key_testnet
+		else:
+			private_key_wif = user.wallet_crypto.btc_private_key
+
+		private_key = wif_to_key(private_key_wif)
+		return private_key
