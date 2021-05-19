@@ -56,4 +56,12 @@ class BitcoinWallet():
 		except: return []
 
 
+	def send_bitcoins(self, from_user, to_address, amount, currency, testnet=False):
+		try:
+			private_key = self.convert_wif_to_privatekey(from_user, testnet)
+			if currency in self.supported_currencies().keys():
+				tx_hash = private_key.send([(to_address, amount, currency)])
+				return tx_hash
+			else: return None
+		except: return None
 	
