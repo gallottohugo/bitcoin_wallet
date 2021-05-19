@@ -1,6 +1,6 @@
 from bit import PrivateKey, PrivateKeyTestnet
 from bit.format import bytes_to_wif
-
+from bit.network import satoshi_to_currency
 from wallets_crypto.models import WalletCrypto
 
 class BitcoinWallet():
@@ -80,4 +80,12 @@ class BitcoinWallet():
 				return tx_hash
 			else: return None
 		except: return None
+
+
+	@staticmethod
+	def satoshi_to_currency(self, satoshi, currency):
+		if currency in self.supported_currencies().keys():
+			return satoshi_to_currency(satoshi, currency)
+		else:
+			return None
 	
