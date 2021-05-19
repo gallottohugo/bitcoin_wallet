@@ -64,4 +64,20 @@ class BitcoinWallet():
 				return tx_hash
 			else: return None
 		except: return None
+
+
+	def send_bitcoins_with_fee(self, from_user, to_address, amount, testnet=False):
+		try:
+			total_fee = 0.00015000
+			currency = 'satoshi'
+			
+			satoshi_amount = int(amount * 100000000)
+			satoshi_fee = int(total_fee * 100000000)
+
+			private_key = self.convert_wif_to_privatekey(from_user, testnet)
+			if currency in self.supported_currencies().keys():
+				tx_hash = private_key.send([(to_address, satoshi_amount, currency)], fee=satoshi_fee, absolute_fee=True, leftover=private_key.address)
+				return tx_hash
+			else: return None
+		except: return None
 	
