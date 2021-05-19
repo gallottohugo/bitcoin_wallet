@@ -37,4 +37,16 @@ class BitcoinWallet():
 			return wallet_crypto
 
 
+	def get_balance(self, user, currency, testnet=False):
+		try:
+			if currency in self.supported_currencies().keys():
+				private_key = self.convert_wif_to_privatekey(user, testnet)
+				balance = private_key.get_balance(currency)
+				return balance
+			else:
+				return None
+		except:
+			return None
+
+
 	
