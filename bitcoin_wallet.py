@@ -48,5 +48,12 @@ class BitcoinWallet():
 		except:
 			return None
 
+	def get_transactions(self, user, testnet=False):
+		try:
+			private_key = self.convert_wif_to_privatekey(user, testnet)
+			txs = private_key.get_transactions()
+			return txs
+		except: return []
+
 
 	
